@@ -71,7 +71,7 @@ namespace ByteCarrot.Aspy.Tree
             }
             else
             {
-                if (!(o.GetType() is  Type)) //加入判断防止循环引用
+                if (!(o.ToString() == "System.Object")) //加入判断防止循环引用
                 {
                     children = HandleObject(type, o, level);    
                 }
