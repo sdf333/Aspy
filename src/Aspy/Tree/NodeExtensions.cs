@@ -44,6 +44,8 @@ namespace ByteCarrot.Aspy.Tree
             sb.Append(",");
             sb.AppendValue("value", node.Value);
             sb.Append(",");
+            sb.AppendValue("level", node.Level.ToString());
+            sb.Append(",");
             sb.Append("\"children\":[");
             var first = false;
             foreach (var child in node.Children)

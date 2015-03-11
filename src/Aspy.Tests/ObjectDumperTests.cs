@@ -1,7 +1,11 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Web.Script.Serialization;
+using ByteCarrot.Aspy.Infrastructure;
 using ByteCarrot.Aspy.Tree;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using NUnit.Framework;
 
 namespace ByteCarrot.Aspy.Tests
@@ -11,8 +15,9 @@ namespace ByteCarrot.Aspy.Tests
         [Test]
         public void A()
         {
-            var dic = new Dictionary<string, string> { { "Key 1", "Value 1" }, { "Key 2", "Value 2" } };
-            var x = new ObjectDumper().Dump(typeof(Object));
+            var t = new object().GetType();
+            var s2 = new JavaScriptSerializer().Serialize(t);
+            Assert.IsNull(s2);
         }
     }
 }

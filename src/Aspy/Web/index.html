@@ -20,6 +20,11 @@
             <td class="type">
                 <span>{{:type}}</span>
             </td>
+            <td class="" level="{{:level}}">
+                {{if level == 1}}
+                <input type="checkbox" value="{{:name}}" name="keys" />
+                {{/if}}
+            </td>
         </tr>
     </script>
     <script id="template-node" type="text/x-jsrender">
@@ -35,6 +40,12 @@
             </td>
             <td class="type">
                 <span>{{:type}}</span>
+            </td>
+            <td class="" level="{{:level}}">
+                {{if level == 1}}
+                <input type="checkbox" value="{{:name}}" name="keys" />
+                {{/if}}
+                
             </td>
         </tr>
     </script>
@@ -70,6 +81,7 @@
                                 <th class="type last">
                                     Type
                                 </th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -77,23 +89,27 @@
                     </table>
                 </div>
                 <div id="tab-cache">
-                    <table>
-                        <thead>
-                            <tr data-id="1">
-                                <th class="name">
-                                    Name
-                                </th>
-                                <th class="value">
-                                    Value
-                                </th>
-                                <th class="type last">
-                                    Type
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                    <form action="" method="POST">
+                        <table id="tbCache">
+                            <thead>
+                                <tr data-id="1">
+                                    <th class="name">
+                                        Name
+                                    </th>
+                                    <th class="value">
+                                        Value
+                                    </th>
+                                    <th class="type last">
+                                        Type
+                                    </th>
+                                    <th class="">
+                                        <input type="checkbox"/><input type="submit" value="clear" id="btnClear">
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </form>
                 </div>
             </div>
         </div>
@@ -130,6 +146,27 @@
                 var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
                 uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/W3FCK9osH1VZGUK4D5l8dA.js';
                 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+
+                var checkAll = $("#tbCache th input[type='checkbox']");
+                checkAll.click(function () {
+                    $('#tbCache td input[type=checkbox]').prop('checked', $(this).prop('checked'));
+                });
+
+                $(document).delegate('#tbCache td input[type=checkbox]', 'click', function () {
+                    var subs = $('#tbCache td input[type=checkbox]');
+                    checkAll.prop("checked", subs.length === subs.filter(":checked").length ? true : false);
+                });
+
+                $("#btnClear").click(function () {
+                    var subs = $('#tbCache td input:checked');
+                    if (subs.length === 0) {
+                        alert("please select node");
+                        return false;
+                    }
+
+                    return confirm("Confirm Delete?");
+                });
+
             })();
         </script>
     </body>

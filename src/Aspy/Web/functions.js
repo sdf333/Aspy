@@ -74,7 +74,8 @@ function renderLeaf(node, antecedent, parentId, level) {
         parentId: parentId,
         name: node.name,
         value: node.value,
-        type: node.type
+        type: node.type,
+        level: node.level
     }]);
 
     antecedent.after(html);
@@ -92,7 +93,8 @@ function renderNode(node, antecedent, parentId, level) {
         parentId: parentId,
         name: node.name,
         value: node.value,
-        type: node.type
+        type: node.type,
+        level: node.level
     }]);
 
     var row = $(html).click(clicked);

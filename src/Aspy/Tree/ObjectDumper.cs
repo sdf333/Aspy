@@ -41,7 +41,7 @@ namespace ByteCarrot.Aspy.Tree
         private Node Process(string kind, string name, object o, int level)
         {
             level++;
-            var node = new Node {Kind = kind, Name = name};
+            var node = new Node { Kind = kind, Name = name, Level = level };
 
             if (o == null)
             {
@@ -55,7 +55,7 @@ namespace ByteCarrot.Aspy.Tree
             node.Type = type.GetFullName();
             node.Value = o.ToString();
             
-            List<Node> children;
+            List<Node> children = new List<Node>();
             if (type.IsPrimitive || o is String)
             {
                 return node;
@@ -71,7 +71,11 @@ namespace ByteCarrot.Aspy.Tree
             }
             else
             {
-                children = HandleObject(type, o, level);
+                if (!(o.GetType() is  Type)) //加入判断防止循环引用
+                {
+                    children = HandleObject(type, o, level);    
+                }
+                
             }
 
             node.Children = children;

@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.Collections.Specialized;
+using System.Web;
 using System.Web.SessionState;
 using ByteCarrot.Aspy.Web;
 
@@ -11,19 +12,33 @@ namespace ByteCarrot.Aspy
 
         public void ProcessRequest(HttpContext context)
         {
-            var action = context.Request.QueryString["action"];
-            switch (action)
+            if (context.Request.HttpMethod =="GET")
             {
-                case "session":
-                    _dynamic.HandleSession(context);
-                    break;
-                case "cache":
-                    _dynamic.HandleCache(context);
-                    break;
-                    break;
-                default:
-                    _static.Handle(context);
-                    break;
+                var action = context.Request.QueryString["action"];
+                switch (action)
+                {
+                    case "session":
+                        _dynamic.HandleSession(context);
+                        break;
+                    case "cache":
+                        _dynamic.HandleCache(context);
+                        break;
+                        break;
+                    default:
+                        _static.Handle(context);
+                        break;
+                }
+            }
+            else if (context.Request.HttpMethod == "POST")
+            {
+                //Clear Cache
+                var keys = context.Request.Form.GetValues("keys");
+                foreach (var key in keys)
+                {
+                    context.Cache.Remove(key);
+                }
+
+                _static.Handle(context);
             }
         }
 

@@ -12,6 +12,8 @@ namespace ByteCarrot.Aspy.Tree
 
         public string Value { get; set; }
 
+        public int Level { get; set; }
+
         public List<Node> Children { get; set; }
 
         public Node()
