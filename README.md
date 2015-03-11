@@ -4,3 +4,4 @@
 
 2015.3.11
 分支修复了对象序列化循环引用错误，以及添加了手动删除缓存功能。
+MVC程序请在添加后在RouteConfig中添加一行代码：routes.IgnoreRoute("{resource}.ashx/{*pathInfo}");
